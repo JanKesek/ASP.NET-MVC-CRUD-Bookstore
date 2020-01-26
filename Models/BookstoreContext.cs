@@ -26,7 +26,7 @@ namespace BookstoreCRUD.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<User> User { get; set; }
-
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -35,7 +35,7 @@ namespace BookstoreCRUD.Models
                 optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;Integrated Security=true;");
             }
         }
-
+        */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>
