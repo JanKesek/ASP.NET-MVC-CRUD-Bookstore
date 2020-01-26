@@ -76,8 +76,8 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<AuthorGenre>(entity =>
             {
-                entity.HasNoKey();
-
+                //entity.HasNoKey();
+                entity.HasKey(x => new { x.AuthorId, x.GenreId });
                 entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
 
                 entity.Property(e => e.GenreId).HasColumnName("GenreID");
@@ -125,7 +125,8 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<BookGenre>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
+                entity.HasKey(x => new { x.Isbn, x.GenreId });
 
                 entity.Property(e => e.GenreId).HasColumnName("GenreID");
 
