@@ -15,7 +15,7 @@ namespace BookstoreCRUD.Models
         public string Title { get; set; }
         public byte? Stock { get; set; }
         public decimal? Price { get; set; }
-        public byte[] Picture { get; set; }
+        public String Picture { get; set; }
         public int? PageCount { get; set; }
         public string Language { get; set; }
 

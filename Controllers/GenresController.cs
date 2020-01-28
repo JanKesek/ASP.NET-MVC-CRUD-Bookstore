@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+//using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -42,6 +43,21 @@ namespace BookstoreCRUD.Controllers
             return View(genre);
         }
 
+        public async Task<IActionResult> Details2(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var books = from book in _context.Book where book.BookGenre.Any(b=>b.GenreId==id) select book;
+            if (books == null) return NotFound();
+            return View(books);
+        }
+        public async Task<IActionResult> RedirectionToBook(int? id)
+        {
+            return LocalRedirect("/Books/Details/" + id);
+            //return RedirectToAction("Books", "Index");
+        }
         // GET: Genres/Create
         public IActionResult Create()
         {
