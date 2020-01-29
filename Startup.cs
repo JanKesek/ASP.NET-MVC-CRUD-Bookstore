@@ -27,7 +27,8 @@ namespace BookstoreCRUD
         {
             services.AddMvc();
             services.AddControllersWithViews();
-            var connection = @"Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;Integrated Security=true;";
+            //var connection = @"Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;Integrated Security=true;";
+            var connection=@"Server=tcp:bookstorecruddbserver.database.windows.net,1433;Initial Catalog=BookstoreCRUD_db;Persist Security Info=False;User ID=jkesek;Password=Holden9515;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
             services.AddDbContext<BookstoreContext>(
                 options => options.UseSqlServer(connection)

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using System.Configuration;
 namespace BookstoreCRUD.Models
 {
     public partial class BookstoreContext : DbContext
@@ -26,15 +26,23 @@ namespace BookstoreCRUD.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<User> User { get; set; }
-
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=(localdb);Database=Bookstore;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=bookstore123.database.windows.net;Database=Bookstore;User Id=jkesek;Password=Holden9515;");
+                
+                //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"]);
             }
+           // optionsBuilder.UseSqlServer("Server=(localdb);Database=Bookstore;Trusted_Connection=True;");
+
+            optionsBuilder.UseSqlServer("Server=tcp:bookstorecruddbserver.database.windows.net,1433;Initial Catalog=BookstoreCRUD_db;Persist Security Info=False;User ID=jkesek;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
+        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
