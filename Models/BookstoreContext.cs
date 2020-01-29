@@ -26,16 +26,16 @@ namespace BookstoreCRUD.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<User> User { get; set; }
-        /*
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;");
             }
         }
-        */
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>
@@ -76,20 +76,22 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<AuthorGenre>(entity =>
             {
-                //entity.HasNoKey();
-                entity.HasKey(x => new { x.AuthorId, x.GenreId });
-                entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
+                entity.HasKey(e => new { e.GenreId, e.AuthorId });
 
                 entity.Property(e => e.GenreId).HasColumnName("GenreID");
+
+                entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
 
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.AuthorGenre)
                     .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AuthorGenre_Author");
 
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.AuthorGenre)
                     .HasForeignKey(d => d.GenreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AuthorGenre_Genre");
             });
 
@@ -105,7 +107,9 @@ namespace BookstoreCRUD.Models
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Picture).HasColumnType("image");
+                entity.Property(e => e.Picture)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Price).HasColumnType("money");
 
@@ -125,8 +129,7 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<BookGenre>(entity =>
             {
-                //entity.HasNoKey();
-                entity.HasKey(x => new { x.Isbn, x.GenreId });
+                entity.HasKey(e => new { e.GenreId, e.Isbn });
 
                 entity.Property(e => e.GenreId).HasColumnName("GenreID");
 
@@ -135,11 +138,13 @@ namespace BookstoreCRUD.Models
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.BookGenre)
                     .HasForeignKey(d => d.GenreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_BookGenre_Genre");
 
                 entity.HasOne(d => d.IsbnNavigation)
                     .WithMany(p => p.BookGenre)
                     .HasForeignKey(d => d.Isbn)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_BookGenre_Book");
             });
 

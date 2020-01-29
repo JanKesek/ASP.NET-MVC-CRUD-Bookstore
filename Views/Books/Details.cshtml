@@ -32,7 +32,9 @@
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Picture)
+            <a href='@Url.Content(Model.Picture)'>
+            <img src="@Url.Content(Model.Picture)" alt="image" width="42" height="42" />
+            </a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PageCount)
