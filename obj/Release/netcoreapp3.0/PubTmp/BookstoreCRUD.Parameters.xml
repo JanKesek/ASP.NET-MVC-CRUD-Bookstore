@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="BookstoreCRUD20200129071111" tags="IisApp">
+  <parameter name="IIS Web Application Name" description="" value="BookstoreCRUD20200129104208" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\chewb\\source\\repos\\BookstoreCRUD\\obj\\Release\\netcoreapp3\.0\\PubTmp\\Out\\$" />
-  </parameter>
-  <parameter name="BookstoreCRUD.Models.BookstoreContext" description="" value="Data Source=tcp:bookstore123.database.windows.net,1433;Initial Catalog=Bookstore;User Id=jkesek@bookstore123;Password=Holden9515" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\chewb\\source\\repos\\BookstoreCRUD\\obj\\Release\\netcoreapp3\.0\\PubTmp\\EFSQLScripts\\BookstoreCRUD\.Models\.BookstoreContext\.sql$" />
   </parameter>
 </parameters>

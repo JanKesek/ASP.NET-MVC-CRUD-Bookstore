@@ -1,40 +1,65 @@
 ﻿@model IEnumerable<BookstoreCRUD.Models.Book>
 
 @{
-    ViewData["Title"] = "Details2";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Details2</h1>
+<h1>Books</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.PageCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Language)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
+        <tr>
+            <td>
+                <a href='@Url.Content(item.Picture)'>
+                    <img src="@Url.Content(item.Picture)" alt="image" width="42" height="42" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="RedirectionToBook" asp-route-id="@item.Isbn">
                     @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Isbn">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Isbn">Details</a> |
-                    <a asp-action="RedirectionToBook" asp-route-id="@item.Isbn">Details2</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Isbn">Delete</a>
-                </td>
-            </tr>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PageCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Language)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Isbn">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Isbn">Details</a> |
+            </td>
+        </tr>
         }
     </tbody>
 </table>

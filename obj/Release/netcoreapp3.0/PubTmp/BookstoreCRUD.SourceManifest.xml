@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
   <IisApp path="C:\Users\chewb\source\repos\BookstoreCRUD\obj\Release\netcoreapp3.0\PubTmp\Out\" />
-  <dbfullsql path="C:\Users\chewb\source\repos\BookstoreCRUD\obj\Release\netcoreapp3.0\PubTmp\EFSQLScripts\BookstoreCRUD.Models.BookstoreContext.sql" />
 </sitemanifest>
