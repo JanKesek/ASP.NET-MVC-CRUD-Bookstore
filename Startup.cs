@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,9 +28,8 @@ namespace BookstoreCRUD
         {
             services.AddMvc();
             services.AddControllersWithViews();
-            //var connection = @"Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;Integrated Security=true;";
-            var connection=@"Server=tcp:bookstorecruddbserver.database.windows.net,1433;Initial Catalog=BookstoreCRUD_db;Persist Security Info=False;User ID=jkesek;Password=Holden9515;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            var connection = configuration.GetSection("Data").GetSection("ConString").Value;
             services.AddDbContext<BookstoreContext>(
                 options => options.UseSqlServer(connection)
             );

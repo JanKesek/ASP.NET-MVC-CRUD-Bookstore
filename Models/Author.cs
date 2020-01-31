@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookstoreCRUD.Models
 {
@@ -8,14 +10,17 @@ namespace BookstoreCRUD.Models
         public Author()
         {
             AuthorGenre = new HashSet<AuthorGenre>();
-            OrderDetails = new HashSet<OrderDetails>();
         }
 
+        [Key]
+        [Column("AuthorID")]
         public int AuthorId { get; set; }
+        [StringLength(20)]
         public string FirstName { get; set; }
+        [StringLength(20)]
         public string LastName { get; set; }
 
+        [InverseProperty("Author")]
         public virtual ICollection<AuthorGenre> AuthorGenre { get; set; }
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

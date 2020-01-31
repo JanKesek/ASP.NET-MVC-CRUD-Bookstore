@@ -9,25 +9,23 @@ using BookstoreCRUD.Models;
 
 namespace BookstoreCRUD.Controllers
 {
-    public class BooksController : Controller
+    public class CustomersController : Controller
     {
         private readonly BookstoreContext _context;
 
-        public BooksController(BookstoreContext context)
+        public CustomersController(BookstoreContext context)
         {
             _context = context;
         }
-        public async Task<IActionResult> RedirectToCustomer()
-        {
-            return LocalRedirect("/Customer/New");
-        }
-        // GET: Books
+
+        // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Book.ToListAsync());
+            var bookstoreContext = _context.Customer.Include(c => c.Address);
+            return View(await bookstoreContext.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +33,41 @@ namespace BookstoreCRUD.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.Isbn == id);
-            if (book == null)
+            var customer = await _context.Customer
+                .Include(c => c.Address)
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(customer);
         }
-
-        // GET: Books/Create
+        public IActionResult New() { return View();  }
+        // GET: Customers/Create
         public IActionResult Create()
         {
+            ViewData["AddressId"] = new SelectList(_context.Address, "AddressId", "AddressId");
             return View();
         }
-
-        // POST: Books/Create
+        // POST: Customers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Isbn,Title,Stock,Price,Picture,PageCount,Language")] Book book)
+        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,Email,AddressId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["AddressId"] = new SelectList(_context.Address, "AddressId", "AddressId", customer.AddressId);
+            return View(customer);
         }
 
-        // GET: Books/Edit/5
+        // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +75,23 @@ namespace BookstoreCRUD.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book.FindAsync(id);
-            if (book == null)
+            var customer = await _context.Customer.FindAsync(id);
+            if (customer == null)
             {
                 return NotFound();
             }
-            return View(book);
+            ViewData["AddressId"] = new SelectList(_context.Address, "AddressId", "AddressId", customer.AddressId);
+            return View(customer);
         }
 
-        // POST: Books/Edit/5
+        // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Isbn,Title,Stock,Price,Picture,PageCount,Language")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,Email,AddressId")] Customer customer)
         {
-            if (id != book.Isbn)
+            if (id != customer.CustomerId)
             {
                 return NotFound();
             }
@@ -99,12 +100,12 @@ namespace BookstoreCRUD.Controllers
             {
                 try
                 {
-                    _context.Update(book);
+                    _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Isbn))
+                    if (!CustomerExists(customer.CustomerId))
                     {
                         return NotFound();
                     }
@@ -115,10 +116,11 @@ namespace BookstoreCRUD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["AddressId"] = new SelectList(_context.Address, "AddressId", "AddressId", customer.AddressId);
+            return View(customer);
         }
 
-        // GET: Books/Delete/5
+        // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +128,31 @@ namespace BookstoreCRUD.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.Isbn == id);
-            if (book == null)
+            var customer = await _context.Customer
+                .Include(c => c.Address)
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(customer);
         }
 
-        // POST: Books/Delete/5
+        // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Book.FindAsync(id);
-            _context.Book.Remove(book);
+            var customer = await _context.Customer.FindAsync(id);
+            _context.Customer.Remove(customer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool CustomerExists(int id)
         {
-            return _context.Book.Any(e => e.Isbn == id);
+            return _context.Customer.Any(e => e.CustomerId == id);
         }
     }
 }

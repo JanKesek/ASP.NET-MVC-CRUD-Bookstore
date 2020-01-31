@@ -205,3 +205,9 @@ C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Bo
 C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\BookGenres\Details.cshtml.g.cs
 C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\BookGenres\Edit.cshtml.g.cs
 C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\BookGenres\Index.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\Create.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\Delete.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\Details.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\Edit.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\Index.cshtml.g.cs
+C:\Users\chewb\source\repos\BookstoreCRUD\obj\Debug\netcoreapp3.0\Razor\Views\Customers\New.cshtml.g.cs

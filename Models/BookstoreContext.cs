@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Configuration;
+
 namespace BookstoreCRUD.Models
 {
     public partial class BookstoreContext : DbContext
@@ -26,69 +26,33 @@ namespace BookstoreCRUD.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<User> User { get; set; }
-        /*
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-VGUCJ4G;Database=Bookstore;Trusted_Connection=True;");
-                //optionsBuilder.UseSqlServer("Server=(localdb);Database=Bookstore;Trusted_Connection=True;");
-                //optionsBuilder.UseSqlServer("Server=bookstore123.database.windows.net;Database=Bookstore;User Id=jkesek;Password=Holden9515;");
-                
-                //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"]);
-            }
-           // optionsBuilder.UseSqlServer("Server=(localdb);Database=Bookstore;Trusted_Connection=True;");
 
-            optionsBuilder.UseSqlServer("Server=tcp:bookstorecruddbserver.database.windows.net,1433;Initial Catalog=BookstoreCRUD_db;Persist Security Info=False;User ID=jkesek;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-        }
-        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>
             {
-                entity.Property(e => e.AddressId)
-                    .HasColumnName("AddressID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.AddressId).ValueGeneratedNever();
 
-                entity.Property(e => e.City)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.City).IsFixedLength();
 
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+                entity.Property(e => e.State).IsFixedLength();
 
-                entity.Property(e => e.State)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Street)
-                    .HasMaxLength(15)
-                    .IsFixedLength();
+                entity.Property(e => e.Street).IsFixedLength();
             });
 
             modelBuilder.Entity<Author>(entity =>
             {
-                entity.Property(e => e.AuthorId)
-                    .HasColumnName("AuthorID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.AuthorId).ValueGeneratedNever();
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.FirstName).IsFixedLength();
 
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.LastName).IsFixedLength();
             });
 
             modelBuilder.Entity<AuthorGenre>(entity =>
             {
                 entity.HasKey(e => new { e.GenreId, e.AuthorId });
-
-                entity.Property(e => e.GenreId).HasColumnName("GenreID");
-
-                entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
 
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.AuthorGenre)
@@ -105,43 +69,21 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<Book>(entity =>
             {
-                entity.HasKey(e => e.Isbn);
+                entity.Property(e => e.Isbn).ValueGeneratedNever();
 
-                entity.Property(e => e.Isbn)
-                    .HasColumnName("ISBN")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Language).IsUnicode(false);
 
-                entity.Property(e => e.Language)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Picture)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Price).HasColumnType("money");
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(60);
+                entity.Property(e => e.Picture).IsUnicode(false);
             });
 
             modelBuilder.Entity<BookAuthor>(entity =>
             {
                 entity.HasNoKey();
-
-                entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
-
-                entity.Property(e => e.Isbn).HasColumnName("ISBN");
             });
 
             modelBuilder.Entity<BookGenre>(entity =>
             {
                 entity.HasKey(e => new { e.GenreId, e.Isbn });
-
-                entity.Property(e => e.GenreId).HasColumnName("GenreID");
-
-                entity.Property(e => e.Isbn).HasColumnName("ISBN");
 
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.BookGenre)
@@ -158,23 +100,9 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CustomerId)
-                    .HasColumnName("CustomerID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.CustomerId).ValueGeneratedNever();
 
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Email).IsFixedLength();
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Customer)
@@ -184,26 +112,14 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<Genre>(entity =>
             {
-                entity.Property(e => e.GenreId)
-                    .HasColumnName("GenreID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.GenreId).ValueGeneratedNever();
 
-                entity.Property(e => e.Description).HasColumnType("text");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Name).IsFixedLength();
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.OrderId)
-                    .HasColumnName("OrderID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
-
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+                entity.Property(e => e.OrderId).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Order)
@@ -213,72 +129,41 @@ namespace BookstoreCRUD.Models
 
             modelBuilder.Entity<OrderDetails>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
-
-                entity.Property(e => e.OrderId)
-                    .HasColumnName("OrderID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
-
-                entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
-
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
-
-                entity.Property(e => e.GenreId).HasColumnName("GenreID");
-
-                entity.Property(e => e.Isbn).HasColumnName("ISBN");
-
-                entity.HasOne(d => d.Address)
-                    .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.AddressId)
-                    .HasConstraintName("FK_OrderDetails_Address");
-
-                entity.HasOne(d => d.Author)
-                    .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.AuthorId)
-                    .HasConstraintName("FK_OrderDetails_Author");
+                entity.HasKey(e => new { e.OrderId, e.Isbn, e.NumberOfProducts })
+                    .HasName("PK_OrderDetails_1");
 
                 entity.HasOne(d => d.IsbnNavigation)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.Isbn)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_Book");
 
                 entity.HasOne(d => d.Order)
-                    .WithOne(p => p.OrderDetails)
-                    .HasForeignKey<OrderDetails>(d => d.OrderId)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_Order");
 
                 entity.HasOne(d => d.OrderNavigation)
-                    .WithOne(p => p.OrderDetails)
-                    .HasForeignKey<OrderDetails>(d => d.OrderId)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_User");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.UserId).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .IsFixedLength();
 
                 entity.Property(e => e.Login)
-                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .IsFixedLength();
 
-                entity.Property(e => e.OrderId)
-                    .HasColumnName("OrderID")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Password).HasColumnType("text");
+                entity.Property(e => e.OrderId).IsFixedLength();
             });
 
             OnModelCreatingPartial(modelBuilder);
